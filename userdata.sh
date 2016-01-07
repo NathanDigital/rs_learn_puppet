@@ -5,10 +5,8 @@ apt-get update
 apt-get -y install puppet
 
 #Link our dirs
-rmdir /etc/puppet/modules
-rmdir /etc/puppet/manifests
-ln -s /vagrant/puppet/modules /etc/puppet/modules
-ln -s /vagrant/puppet/manifests /etc/puppet/manifests
+rm -r  /etc/puppet
+ln -s /vagrant/puppet /etc/puppet
 
 #install required modules and their dependancies from puppet forge, this is a manualy updated file
 bash /vagrant/modules.sh
