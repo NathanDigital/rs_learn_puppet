@@ -11,10 +11,12 @@ class rs_learn_puppet::web {
     source => 'puppet:///modules/rs_learn_puppet/www/default'
   }
   apache::vhost { 'vhost.example.com':
+    require => Class['apache'],
     port    => '80',
     docroot => '/var/www/vhost',
   }
   file { '/var/www/ssl':
+    #require => Class['apache'],
     ensure => directory,
     group  => 'www-data',
     force  => true,
@@ -23,6 +25,7 @@ class rs_learn_puppet::web {
     source => 'puppet:///modules/rs_learn_puppet/www/ssl'
   }
   file { '/etc/apache2/ssl':
+    require => Class['apache'],
     ensure => directory,
     force  => true,
     purge  => true,
@@ -30,7 +33,7 @@ class rs_learn_puppet::web {
     source => 'puppet:///modules/rs_learn_puppet/ssl'
   }
   apache::vhost { 'ssl.rs_learn_puppet.local':
-    subscribe => File['/etc/apache2/ssl'],
+    #subscribe => File['/etc/apache2/ssl'],
     require    => File['/var/www/ssl'],
     port     => '443',
     docroot  => '/var/www/ssl',
